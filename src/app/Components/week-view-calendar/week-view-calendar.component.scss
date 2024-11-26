@@ -1,0 +1,134 @@
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.calendar-week {
+  display: flex;
+  align-items: center;
+}
+
+.calendar-week button {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: background-color 0.3s;
+}
+
+.calendar-week button:hover {
+  background-color: #0056b3;
+}
+
+.calendar-week span {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+.day-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-bottom: 2px solid #ddd;
+  margin-top: 10px;
+}
+
+.day-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin: 0 5px;
+  min-height: 300px;
+  padding: 5px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.calendar-body {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.event-box {
+  width: 90%;
+  margin: 5px 0;
+  padding: 8px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.multi-day {
+  position: absolute;
+  top: 0;
+  background-color: #28a745; /* Green for multi-day events */
+  color: white;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  height: 40px; /* Uniform height */
+  z-index: 10;
+}
+
+.calendar-body {
+  display: flex;
+  position: relative;
+}
+
+
+.event-box span {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .calendar-container {
+    padding: 0 10px;
+  }
+
+  .calendar-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .calendar-body {
+    flex-wrap: wrap;
+  }
+
+  .day-column {
+    flex: 0 1 calc(50% - 10px);
+    margin-bottom: 10px;
+  }
+
+  .calendar-week span {
+    margin-top: 10px;
+  }
+}

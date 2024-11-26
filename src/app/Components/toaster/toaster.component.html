@@ -1,0 +1,6 @@
+<div class="toaster">
+  <div *ngFor="let message of messages" [ngClass]="message.type" class="toast">
+    <span>{{ message.text }}</span>
+    <button (click)="removeMessage(message)">&#10006;</button>
+  </div>
+</div>

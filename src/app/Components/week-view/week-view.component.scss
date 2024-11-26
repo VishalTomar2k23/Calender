@@ -1,0 +1,47 @@
+/* src/app/components/week-view/week-view.component.scss */
+
+.week-view {
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* One column per day */
+    grid-gap: 10px;
+    margin-top: 20px;
+  }
+
+  .day-column {
+    position: relative;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .day-header {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .event {
+    position: absolute;
+    top: 100x;
+    left: 10px;
+    background-color: #ffeb3b;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .event.spanning {
+    background-color: #4caf50; /* Different color for multi-day events */
+  }
+}

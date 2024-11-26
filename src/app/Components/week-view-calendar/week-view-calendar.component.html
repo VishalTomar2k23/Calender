@@ -1,0 +1,40 @@
+<div class="calendar-container">
+  <!-- Calendar Header -->
+  <div class="calendar-header">
+    <div class="calendar-week">
+      <button (click)="changeWeek(-1)">Previous</button>
+      <span>Week {{ currentWeek }}</span>
+      <button (click)="changeWeek(1)">Next</button>
+    </div>
+
+    <!-- Days of the Week -->
+    <div class="day-header" *ngFor="let day of weekDays">
+      <div>{{ day.date }}</div>
+    </div>
+  </div>
+
+  <!-- Calendar Body -->
+  <div class="calendar-body">
+    <!-- Day Columns -->
+    <div class="day-column" *ngFor="let day of weekDays">
+      <!-- Single-Day Events -->
+      <div
+        class="event-box"
+        *ngFor="let event of getEventsForDay(day.date)"
+        [ngStyle]="{ 'top': getEventPosition(event.startTime) }">
+        <span>{{ event.title }}</span>
+      </div>
+
+      <!-- Multi-Day Events -->
+      <!-- <div
+        class="event-box multi-day"
+        *ngFor="let event of multiDayEvents"
+        [ngStyle]="{
+          'left': getMultiDayLeftPosition(event.startDate) + 'px',
+          'width': getMultiDayWidth(event.startDate, event.endDate)/2 + 'px'
+        }">
+        <span>{{ event.title }}</span>
+      </div> -->
+    </div>
+  </div>
+</div>

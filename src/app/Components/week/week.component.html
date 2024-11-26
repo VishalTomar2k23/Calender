@@ -1,0 +1,215 @@
+
+<div class="calendar-container">
+  <!-- Calendar Header -->
+  <div class="calendar-header">
+    <!-- Year Dropdown -->
+    <div class="year-dropdown">
+      <label for="year">Year:</label>
+      <select id="year" [(ngModel)]="selectedYear" (change)="changeYear()">
+        <option *ngFor="let year of yearOptions" [value]="year">{{ year }}</option>
+      </select>
+    </div>
+    <div>
+      <button (click)="toggleShowEvents()" class="btn-month-nav">
+        {{ showAllEVents ? 'Hide Events' : 'Show Events' }}
+      </button>
+      <button (click)="toggleShowWeekends()" class="btn-month-nav">
+        {{ hideWeekends ? 'Show Weekends' : 'Hide Weekends' }}
+      </button>
+    </div>
+
+
+    <!-- Month Navigation -->
+    <button (click)="changeMonth(-1)" class="btn-month-nav">Previous</button>
+    <h2>{{ month+1 }} / {{ year }}</h2>
+    <button (click)="changeMonth(+1)" class="btn-month-nav">Next</button>
+  </div>
+
+  <div class="day-names">
+    <div *ngFor="let dayName of dayNames; let i = index">
+      <span *ngIf="!(hideWeekends && (i === 0 || i === 6))" [ngClass]="{'blank': hideWeekends && (i === 0 || i === 6)}">
+        {{ dayName }}
+      </span>
+    </div>
+  </div>
+
+
+
+ <!-- Calendar Grid -->
+<div class="calendar-grid" >
+  <div *ngFor="let week of days" class="week" >
+    <div *ngFor="let day of week; let i = index"
+         class="calendar-day"
+         (click)="day && openEventForm(day.day)"[ngClass]="getEventClassByCount(day)" >
+
+      <!-- Display the day number -->
+      <span *ngIf="day && !(hideWeekends && (i === 0 || i === 6))" [ngClass]="{'blank': day.day== 0 || (hideWeekends && (i === 0 || i === 6))}">
+        {{ day.day }}
+      </span>
+
+      <!-- Display events for the day -->
+      <div
+  *ngIf="day && day.events?.length > 0 && showAllEVents "
+  class="event-description"
+
+>
+  <div
+    *ngFor="let event of day.events let w = index"
+    class="event-box"
+    [ngClass]="getEventClass(event).class"
+    [ngStyle]="{ width: getEventClass(event).width  }"
+
+  >
+    <button
+      (click)="EditEventForm(event)" 
+      *ngIf="showAllEVents && eventid != null"
+    >
+      {{ event.title }} ({{ event.organizer }})
+    </button>
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+  <!-- Event Form Modal -->
+  <div *ngIf="showEventForm" class="event-form-modal">
+    <div class="event-form-container">
+      <h2>{{ formtitle }}</h2>
+
+      <form (ngSubmit)="saveEvent()" #eventForm="ngForm">
+        <div class="form-group">
+          <label for="title">Event Title</label>
+          <input
+            id="title"
+            [(ngModel)]="newEventTitle"
+            name="title"
+            required
+            placeholder="Enter event title"
+            #title="ngModel"
+          />
+          <div *ngIf="title.invalid && title.touched" class="error-message">
+            Event title is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="organizer">Organizer</label>
+          <input
+            id="organizer"
+            [(ngModel)]="newEventOrganizer"
+            name="organizer"
+            required
+            placeholder="Enter organizer name"
+            #organizer="ngModel"
+          />
+          <div *ngIf="organizer.invalid && organizer.touched" class="error-message">
+            Organizer name is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="startTime">Start Time</label>
+          <input
+            id="startTime"
+            type="time"
+            [(ngModel)]="newEventStartTime"
+            name="startTime"
+            required
+            #startTime="ngModel"
+          />
+          <div *ngIf="startTime.invalid && startTime.touched" class="error-message">
+            Start time is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="endTime">End Time</label>
+          <input
+            id="endTime"
+            type="time"
+            [(ngModel)]="newEventEndTime"
+            name="endTime"
+            required
+            #endTime="ngModel"
+          />
+          <div *ngIf="endTime.invalid && endTime.touched" class="error-message">
+            End time is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="startDate">Start Date</label>
+          <input
+            id="startDate"
+            type="date"
+            [(ngModel)]="newEventStartDate"
+            name="startDate"
+            required
+            #startDate="ngModel"
+          />
+          <div *ngIf="startDate.invalid && startDate.touched" class="error-message">
+            Start date is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="endDate">End Date</label>
+          <input
+            id="endDate"
+            type="date"
+            [(ngModel)]="newEventEndDate"
+            name="endDate"
+            required
+            #endDate="ngModel"
+          />
+          <div *ngIf="endDate.invalid && endDate.touched" class="error-message">
+            End date is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            [(ngModel)]="newEventDescription"
+            name="description"
+            required
+            placeholder="Enter event description"
+            #description="ngModel"
+          ></textarea>
+          <div *ngIf="description.invalid && description.touched" class="error-message">
+            Event description is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="link">Link</label>
+          <input
+            id="link"
+            [(ngModel)]="newEventLink"
+            name="link"
+            placeholder="Enter event link (optional)"
+          />
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="btn-save"
+            [disabled]="eventForm.invalid"
+          >
+            Save Event
+          </button>
+          <button type="button" (click)="closeEventForm()" class="btn-cancel">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+<app-toaster></app-toaster>

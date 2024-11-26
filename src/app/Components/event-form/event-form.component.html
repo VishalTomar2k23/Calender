@@ -1,0 +1,24 @@
+<div class="event-container">
+  <h2>Upcoming Events</h2>
+  <ng-container *ngFor="let date of getSortedDates()">
+    <div *ngFor="let event of events[date]" >
+      <div class="date-group" *ngIf="currentDate <= toDate(event.startDate)  || (currentDate>= toDate(event.startDate)&& currentDate <= toDate(event.endDate) )" >
+        <div >
+          <div class="event-details">
+            <h3>{{ event.startDate| date: 'MMMM d, yyyy' }}</h3>
+            <h4>{{ event.title }}</h4>
+            <p><strong>Start Date:</strong> {{ event.startDate | date: 'MMMM d, yyyy' }}</p>
+            <p><strong>Start Time:</strong> {{ event.startTime  }}</p>
+            <p><strong>End Time:</strong> {{ event.endTime }}</p>
+            <p><strong>End Date:</strong> {{ event.endDate| date: 'MMMM d, yyyy' }}</p>
+            <p><strong>Event Organiser:</strong>{{event.organizer}}</p>
+            <p><strong>Link:</strong><a [href]="event.link" target="_blank">{{ event.link }}</a></p>
+            <p><strong>Description:</strong> {{ event.description }}</p>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

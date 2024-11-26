@@ -1,0 +1,30 @@
+<!-- src/app/components/week-view/week-view.component.html -->
+
+<div class="week-view">
+  <div class="controls">
+    <button (click)="previousWeek()">Previous</button>
+    <span>{{ currentWeek[0] | date: 'MMM d' }} - {{ currentWeek[6] | date: 'MMM d, yyyy' }}</span>
+    <button (click)="nextWeek()">Next</button>
+  </div>
+
+  <div class="week-days">
+    <!-- Grid for the entire week -->
+    <div class="week-grid">
+      <div *ngFor="let day of currentWeek" class="day-column">
+        <div class="day-header">
+          {{ day | date: 'EEEE, MMM d' }}
+        </div>
+
+        <!-- Displaying Events -->
+        <ng-container *ngFor="let event of events">
+          <!-- Multi-day events -->
+          <div *ngIf="isEventVisibleInColumn(event, day)" class="event"
+               [style.gridColumn]="calculateGridColumn(event)" [style.gridRow]="1">
+            <strong>{{ event.title }}</strong><br />
+            {{ event.startDate | date:'EEEE.MMM,d' }} - {{ event.endDate | date:'EEEE.MMM,d'}}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
